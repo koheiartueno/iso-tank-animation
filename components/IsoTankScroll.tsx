@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
-import { useScroll, useSpring, motion, useTransform, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 
 const FRAME_COUNT = 120;
 const IMAGE_DIR = '/sequence/';
