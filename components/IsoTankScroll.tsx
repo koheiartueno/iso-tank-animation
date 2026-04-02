@@ -43,20 +43,20 @@ export default function IsoTankScroll() {
             const loadedImages: HTMLImageElement[] = [];
             let loadedCount = 0;
 
-            for (let i = 0; i < FRAME_COUNT; i++) {
-                // Parallelizing image loads could cause jitter in progress visually,
-                // but sequential provides a stable loading bar. Let's do sequential for stable loading
-                // because we don't want the user to scroll before it's ready.
-                try {
-                    const img = await loadImage(i);
-                    if (!mounted) return;
-                    loadedImages[i] = img;
-                    loadedCount++;
-                    setLoadingProgress(Math.floor((loadedCount / FRAME_COUNT) * 100));
-                } catch (err) {
-                    console.error("Failed to load image", i, err);
-                }
-            }
+            const loadPromises = Array.from({ length: FRAME_COUNT }).map((_, i) => {
+                return loadImage(i)
+                    .then((img) => {
+                        if (!mounted) return;
+                        loadedImages[i] = img;
+                        loadedCount++;
+                        setLoadingProgress(Math.floor((loadedCount / FRAME_COUNT) * 100));
+                    })
+                    .catch((err) => {
+                        console.error("Failed to load image", i, err);
+                    });
+            });
+
+            await Promise.all(loadPromises);
 
             if (!mounted) return;
             setImages(loadedImages);
