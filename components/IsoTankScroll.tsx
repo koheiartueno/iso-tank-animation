@@ -87,7 +87,7 @@ export default function IsoTankScroll() {
         const imgRatio = img.width / img.height;
         const canvasRatio = width / height;
 
-        const scaleFactor = 0.75; // 75% size to ensure padding and no cutting edges
+        const scaleFactor = 0.65; // Reduced to 65% size to ensure no edges are ever cut off
 
         let drawWidth, drawHeight;
 
@@ -149,21 +149,21 @@ export default function IsoTankScroll() {
     // No extra scroll indicators or text overlays needed for embed
 
     return (
-        <div ref={containerRef} className="relative h-[400vh] w-full bg-[#050505] overflow-hidden">
+        <div ref={containerRef} className="relative h-[250vh] w-full bg-transparent overflow-hidden">
 
             {/* Sticky container for canvas and text */}
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center bg-[#050505]">
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center bg-transparent">
 
                 {/* Loading UI */}
                 {!isLoaded && (
-                    <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] text-white">
+                    <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-transparent text-black">
                         <div className="w-64 h-[2px] bg-white/10 rounded overflow-hidden">
                             <div
                                 className="h-full bg-white transition-all duration-300"
                                 style={{ width: `${loadingProgress}%` }}
                             />
                         </div>
-                        <p className="mt-6 text-white/50 text-xs tracking-[0.2em] uppercase font-light">
+                        <p className="mt-6 text-black/50 text-xs tracking-[0.2em] uppercase font-light">
                             Loading Sequence ({loadingProgress}%)
                         </p>
                     </div>
